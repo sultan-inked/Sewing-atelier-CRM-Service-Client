@@ -1,0 +1,7 @@
+spring:
+   application:
+      name: Sewing-atelier-CRM-client
+sa:
+   service:
+      crm:
+         uri: http://localhost:8081

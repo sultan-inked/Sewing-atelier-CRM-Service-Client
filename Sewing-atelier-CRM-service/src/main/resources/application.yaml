@@ -1,0 +1,19 @@
+## Почему то с '-standalone' в названии файла не запускается по указанному порту
+server:
+   port: 8081
+spring:
+   application:
+      name: Sewing-atelier-CRM-service
+   datasource:
+      url: jdbc:postgresql://localhost:5432/Sewing-atelier-CRM-service
+      username: postgres
+      password: admin
+   flyway: 
+      schemas: 
+         - public
+         - catalogue
+   jpa:
+      show-sql: true
+logging:
+   level:
+      sql: info
