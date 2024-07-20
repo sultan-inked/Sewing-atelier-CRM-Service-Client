@@ -1,9 +1,16 @@
 ## Почему то с '-standalone' в названии файла не запускается по указанному порту
+## Файл не считывается если ввести в названии '-standalone'
 server:
    port: 8081
 spring:
    application:
       name: Sewing-atelier-CRM-service
+   security:
+      user:
+         name: service-user
+         password: password
+         roles:
+            - SERVICE
    datasource:
       url: jdbc:postgresql://localhost:5432/Sewing-atelier-CRM-service
       username: postgres

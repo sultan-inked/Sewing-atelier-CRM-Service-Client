@@ -1,3 +1,4 @@
+## Файл не считывается если ввести в названии '-standalone'
 spring:
    application:
       name: Sewing-atelier-CRM-client
@@ -5,3 +6,5 @@ sa:
    service:
       crm:
          uri: http://localhost:8081
+         username: service-user
+         password: password
