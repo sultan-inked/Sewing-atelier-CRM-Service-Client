@@ -7,7 +7,7 @@ import sa.crm.client.entity.Product;
 
 public interface ProductsRestClient {
 	
-	List<Product> findAllProducts();
+	List<Product> findAllProducts(String filter);
 	
 	Product createProduct(String title, String details);
 	
