@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
-import sa.crm.service.dto.CRMUserDto;
-import sa.crm.service.dto.JwtRequest;
-import sa.crm.service.dto.JwtResponse;
-import sa.crm.service.dto.RegistrationUserDto;
+import sa.crm.service.controller.payload.JwtRequest;
+import sa.crm.service.controller.payload.JwtResponse;
+import sa.crm.service.controller.payload.NewUserPayload;
+import sa.crm.service.controller.payload.UserPayload;
 import sa.crm.service.entity.CRMUser;
 import sa.crm.service.exceptions.AppError;
 import sa.crm.service.util.JwtTokenUtils;
@@ -32,31 +32,31 @@ public class AuthService {
 	public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
 		try {
 			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+					new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password()));
 		} catch (BadCredentialsException exc) {
 			return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "Неправильный логин или пароль"),
 										HttpStatus.UNAUTHORIZED);
 		}
 		
-		UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
+		UserDetails userDetails = userService.loadUserByUsername(authRequest.username());
 		String token = jwtTokenUtils.generateToken(userDetails);
 		
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
-	public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
+	public ResponseEntity<?> createNewUser(@RequestBody NewUserPayload newUserPayload) {
 		
-		if(!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
+		if(!newUserPayload.password().equals(newUserPayload.password())) {
 			return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пароли не совпадают"),
 										HttpStatus.BAD_REQUEST);
 		}
-		if(userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
+		if(userService.findByUsername(newUserPayload.username()).isPresent()) {
 			return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с указанным именем уже существует"),
 										HttpStatus.BAD_REQUEST);
 		}
-		CRMUser user = userService.createNewUser(registrationUserDto);
+		CRMUser user = userService.createNewUser(newUserPayload);
 		
-		return ResponseEntity.ok(new CRMUserDto(user.getId(), user.getUsername(), user.getEmail()));
+		return ResponseEntity.ok(new UserPayload(user.getId(), user.getUsername(), user.getEmail()));
 	}
 }
 

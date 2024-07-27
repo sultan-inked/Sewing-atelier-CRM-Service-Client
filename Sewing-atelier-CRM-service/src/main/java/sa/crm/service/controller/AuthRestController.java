@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import sa.crm.service.dto.JwtRequest;
-import sa.crm.service.dto.RegistrationUserDto;
+import sa.crm.service.controller.payload.JwtRequest;
+import sa.crm.service.controller.payload.NewUserPayload;
 import sa.crm.service.service.AuthService;
 
 @RestController
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthRestController {
 	
 	private final AuthService authService;
 	
@@ -22,7 +22,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/registration")
-	public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
-		return authService.createNewUser(registrationUserDto);
+	public ResponseEntity<?> createNewUser(@RequestBody NewUserPayload newUserPayload) {
+		return authService.createNewUser(newUserPayload);
 	}
 }

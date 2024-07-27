@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import sa.crm.service.dto.RegistrationUserDto;
+import sa.crm.service.controller.payload.NewUserPayload;
 import sa.crm.service.entity.CRMUser;
 import sa.crm.service.repository.CRMUserRepository;
 
@@ -50,13 +50,13 @@ public class CRMUserService implements UserDetailsService {
 										.collect(Collectors.toList()));
 	}
 	
-	public CRMUser createNewUser(RegistrationUserDto registrationUserDto) {
+	public CRMUser createNewUser(NewUserPayload registrationUserDto) {
 		
 		CRMUser user = new CRMUser();
 		
-		user.setUsername(registrationUserDto.getUsername());
-		user.setEmail(registrationUserDto.getEmail());
-		user.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
+		user.setUsername(registrationUserDto.username());
+		user.setEmail(registrationUserDto.email());
+		user.setPassword(passwordEncoder.encode(registrationUserDto.password()));
 		
 		return userRepository.save(user);
 	}

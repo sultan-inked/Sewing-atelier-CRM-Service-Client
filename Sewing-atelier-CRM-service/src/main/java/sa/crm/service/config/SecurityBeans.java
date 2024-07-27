@@ -52,7 +52,9 @@ public class SecurityBeans {
 					.requestMatchers(HttpMethod.GET, "/secured").authenticated()
 					.requestMatchers(HttpMethod.GET, "/info").authenticated()
 					.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN")
-					.anyRequest().permitAll())
+					.requestMatchers(HttpMethod.POST, "/registration").hasRole("ADMIN")
+					.requestMatchers(HttpMethod.POST, "/auth").permitAll()
+					.anyRequest().denyAll())
 			.sessionManagement(sessionManagement -> sessionManagement
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.exceptionHandling(exceptionHandling -> exceptionHandling
