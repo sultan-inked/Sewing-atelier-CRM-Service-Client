@@ -1,7 +1,12 @@
 ## Почему то с '-standalone' в названии файла не запускается по указанному порту
 ## Файл не считывается если ввести в названии '-standalone'
 server:
-   port: 8081
+   port: 8189
+   servlet:
+      context-path: /crm
+jwt:
+   secret: 984hg493gh0439rthr0429uruj2309yh937gc763fe87t3f89723gf
+   lifetime: 10m
 spring:
    application:
       name: Sewing-atelier-CRM-service
