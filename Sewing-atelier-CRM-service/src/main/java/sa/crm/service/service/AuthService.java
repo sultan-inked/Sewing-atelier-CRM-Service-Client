@@ -18,6 +18,8 @@ import sa.crm.service.entity.CRMUser;
 import sa.crm.service.exceptions.AppError;
 import sa.crm.service.util.JwtTokenUtils;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -44,19 +46,21 @@ public class AuthService {
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
-	public ResponseEntity<?> createNewUser(@RequestBody NewUserPayload newUserPayload) {
-		
-		if(!newUserPayload.password().equals(newUserPayload.password())) {
-			return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пароли не совпадают"),
-										HttpStatus.BAD_REQUEST);
-		}
-		if(userService.findByUsername(newUserPayload.username()).isPresent()) {
-			return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с указанным именем уже существует"),
-										HttpStatus.BAD_REQUEST);
-		}
+	public Optional<UserPayload> createNewUser(NewUserPayload newUserPayload) {
+
+//		if(!newUserPayload.password().equals(newUserPayload.password())) {
+//			return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пароли не совпадают"),
+//										HttpStatus.BAD_REQUEST);
+//		}
+//		if(userService.findByUsername(newUserPayload.username()).isPresent()) {
+//			return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с указанным именем уже существует"),
+//										HttpStatus.BAD_REQUEST);
+//		}
 		CRMUser user = userService.createNewUser(newUserPayload);
-		
-		return ResponseEntity.ok(new UserPayload(user.getId(), user.getUsername(), user.getEmail()));
+//
+//		return ResponseEntity.ok(new UserPayload(user.getId(), user.getUsername(), user.getEmail()));
+
+		return Optional.of(new UserPayload(user.getId(), user.getUsername(), user.getEmail()));
 	}
 }
 

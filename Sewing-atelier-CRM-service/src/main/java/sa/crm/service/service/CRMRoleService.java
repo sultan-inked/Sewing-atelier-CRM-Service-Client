@@ -12,7 +12,7 @@ public class CRMRoleService {
 	
 	private final CRMRoleRepository roleRepository;
 	
-	public CRMRole getUserRole() {
-		return roleRepository.findByName("ROLE_USER").get();
+	public CRMRole getUserRole(CRMRole role) {
+		return roleRepository.findByName(role.getName()).get();
 	}
 }

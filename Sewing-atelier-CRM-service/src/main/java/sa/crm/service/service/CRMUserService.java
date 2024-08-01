@@ -50,13 +50,14 @@ public class CRMUserService implements UserDetailsService {
 										.collect(Collectors.toList()));
 	}
 	
-	public CRMUser createNewUser(NewUserPayload registrationUserDto) {
+	public CRMUser createNewUser(NewUserPayload newUserPayload) {
 		
 		CRMUser user = new CRMUser();
 		
-		user.setUsername(registrationUserDto.username());
-		user.setEmail(registrationUserDto.email());
-		user.setPassword(passwordEncoder.encode(registrationUserDto.password()));
+		user.setUsername(newUserPayload.username());
+		user.setEmail(newUserPayload.email());
+		user.setPassword(passwordEncoder.encode(newUserPayload.password()));
+		user.setRoles(newUserPayload.roles());
 		
 		return userRepository.save(user);
 	}

@@ -6,11 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+//@Data
 @Entity
 @Table(name = "t_roles", schema = "crm_user")
+@Getter
+@Setter
 public class CRMRole {
 	
 	@Id
@@ -19,4 +22,5 @@ public class CRMRole {
 	
 	@Column(name = "name")
 	private String name;
+	
 }
